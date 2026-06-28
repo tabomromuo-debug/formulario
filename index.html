@@ -854,7 +854,7 @@
   <!-- Contact Email Box (REPLACES email input) -->
   <div class="contact-box">
     <div class="contact-label">📧 Quer falar com a gente diretamente?</div>
-    <div class="contact-email"><a href="mailto:eter.official@gmail.com">eter.officiall@gmail.com</a></div>
+    <div class="contact-email"><a href="mailto:feedback@eter.app">feedback@eter.app</a></div>
   </div>
 
   <!-- ===== FORM VIEW ===== -->
@@ -1498,6 +1498,181 @@
   </div>
 
   <!-- Footer -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+      <h2>📊 Painel de Dados — ÉTER Feedback</h2>
+      <div class="admin-actions">
+        <button class="admin-btn" onclick="exportFeedbacks()">📥 Exportar JSON</button>
+        <button class="admin-btn" onclick="exportCSV()">📄 Exportar CSV</button>
+        <button class="admin-btn danger" onclick="clearAllData()">🗑️ Limpar Tudo</button>
+        <button class="admin-btn" onclick="showForm()">📝 Voltar ao Form</button>
+      </div>
+    </div>
+
+    <div class="admin-stats" id="adminStats">
+      <div class="stat-card">
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-label">Total de Respostas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statNPS">0</div>
+        <div class="stat-label">NPS Médio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statDesign">0</div>
+        <div class="stat-label">Design Médio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statEfet">0</div>
+        <div class="stat-label">Efetividade Média</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statTopico">—</div>
+        <div class="stat-label">Tópico Mais Votado</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statMinijogoMenos">—</div>
+        <div class="stat-label">Minijogo Menos Votado</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statTopicoMenos">—</div>
+        <div class="stat-label">Tópico Menos Votado</div>
+      </div>
+    </div>
+    
+
+<div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchTab('tab-rankings')" data-tab="tab-rankings">🏆 Rankings</button>
+      <button class="admin-tab" onclick="switchTab('tab-avaliacoes')" data-tab="tab-avaliacoes">⭐ Avaliações</button>
+      <button class="admin-tab" onclick="switchTab('tab-uso')" data-tab="tab-uso">📊 Uso & Tempo</button>
+      <button class="admin-tab" onclick="switchTab('tab-nps')" data-tab="tab-nps">📢 NPS & Humor</button>
+      
+      <button class="admin-tab" onclick="switchTab('tab-sugestoes')" data-tab="tab-sugestoes">💡 Sugestões</button>
+      <button class="admin-tab" onclick="switchTab('tab-tabela')" data-tab="tab-tabela">📋 Tabela Completa</button>
+      <button class="admin-tab" onclick="switchTab('tab-todos')" data-tab="tab-todos">📋 Todos os Dados</button>
+    </div>      
+
+
+    <!-- TAB: Rankings -->
+    <div class="tab-content active" id="tab-rankings">
+      <div class="stats-dashboard">
+        <div class="stat-section">
+          <h4><span class="icon">🏆</span> Ranking dos Minijogos (Mais Útil → Menos Útil)</h4>
+          <div id="rankingChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">🎯</span> Tópico que MAIS Ajudou</h4>
+          <div id="topicoMaisChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">🎮</span> Minijogo que MENOS Ajudou</h4>
+          <div id="minijogoMenosChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">📉</span> Tópicos que MENOS Ajudaram</h4>
+          <div id="topicosMenosChart"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Avaliações -->
+    <div class="tab-content" id="tab-avaliacoes">
+      <div class="stats-dashboard">
+        <div class="stat-section">
+          <h4><span class="icon">⭐</span> Média das Avaliações por Estrela</h4>
+          <div id="ratingsChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">📊</span> Distribuição das Notas (Design)</h4>
+          <div id="designDistChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">📊</span> Distribuição das Notas (Efetividade)</h4>
+          <div id="efetDistChart"></div>
+                <div class="stat-section">
+          <h4><span class="icon">📊</span> Nota Mais Escolhida (Maioria)</h4>
+          <div id="majorityChart"></div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Uso & Tempo -->
+    <div class="tab-content" id="tab-uso">
+      <div class="stats-dashboard">
+        <div class="stat-section">
+          <h4><span class="icon">🔄</span> Frequência de Uso</h4>
+          <div id="usoChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">⏱️</span> Tempo no Site</h4>
+          <div id="tempoChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">📈</span> Resumo de Uso</h4>
+          <div id="usoResumo"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: NPS & Humor -->
+    <div class="tab-content" id="tab-nps">
+      <div class="stats-dashboard">
+        <div class="stat-section">
+          <h4><span class="icon">📢</span> NPS — Detratores, Passivos e Promotores</h4>
+          <div id="npsChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">📊</span> Distribuição do NPS</h4>
+          <div id="npsDistChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">💭</span> Como as Pessoas se Sentiram Depois</h4>
+          <div id="moodChart"></div>
+        </div>
+      </div>
+    </div>
+
+    
+
+        <!-- TAB: O que Falta & Fricção -->
+    <div class="tab-content" id="tab-sugestoes">
+      <div class="stats-dashboard">
+        <div class="stat-section" style="grid-column: 1 / -1;">
+          <h4><span class="icon">💡</span> Todas as Sugestões</h4>
+          <div class="suggestions-list" id="suggestionsList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Tabela Completa -->
+    <div class="tab-content" id="tab-tabela">
+      <div id="feedbackList"></div>
+    
+    <!-- TAB: Todos os Dados -->
+    <div class="tab-content" id="tab-todos">
+      <div class="stats-dashboard">
+        <div class="stat-section" style="grid-column: 1 / -1;">
+          <h4><span class="icon">🏆</span> Todos os Rankings Individuais</h4>
+          <div id="allRankings"></div>
+        </div>
+        <div class="stat-section" style="grid-column: 1 / -1;">
+          <h4><span class="icon">⭐</span> Todas as Avaliações Individuais</h4>
+          <div id="allRatings"></div>
+        </div>
+        <div class="stat-section" style="grid-column: 1 / -1;">
+          <h4><span class="icon">📢</span> Todos os NPS Individuais</h4>
+          <div id="allNPS"></div>
+        </div>
+        <div class="stat-section" style="grid-column: 1 / -1;">
+          <h4><span class="icon">💭</span> Todos os Humores Individuais</h4>
+          <div id="allMoods"></div>
+        </div>
+      </div>
+    </div>
+</div>
+
   <div class="footer">
     <div class="footer-logo">ÉTER</div>
     <div class="footer-text">Site de bem-estar mental para o dia a dia · 2026</div>
@@ -2086,29 +2261,7 @@ if (localStorage.getItem('eter_feedback_enviado') === '1') {
 // ===== ADMIN ACCESS METHODS =====
 window.openAdminPanel = showAdminPanel;
 
-// 1. Ctrl+Shift+A
-window.addEventListener('keydown', function(e) {
-  if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a' || e.code === 'KeyA')) {
-    e.preventDefault();
-    e.stopPropagation();
-    showAdminPanel();
-    return false;
-  }
-  if (e.altKey && (e.key === 'A' || e.key === 'a' || e.code === 'KeyA')) {
-    e.preventDefault();
-    e.stopPropagation();
-    showAdminPanel();
-    return false;
-  }
-  if (e.shiftKey && !e.ctrlKey && !e.altKey && (e.key === 'A' || e.key === 'a' || e.code === 'KeyA')) {
-    e.preventDefault();
-    e.stopPropagation();
-    showAdminPanel();
-    return false;
-  }
-}, true);
-
-// 2. Double-tap Shift
+// Duplo Shift para abrir painel admin
 let lastShiftTime = 0;
 window.addEventListener('keydown', function(e) {
   if (e.key === 'Shift') {
@@ -2122,209 +2275,16 @@ window.addEventListener('keydown', function(e) {
   }
 });
 
-// 3. Type "eteradmin"
-let adminBuffer = '';
-document.addEventListener('keypress', function(e) {
-  adminBuffer += e.key.toLowerCase();
-  if (adminBuffer.length > 20) adminBuffer = adminBuffer.slice(-20);
-  if (adminBuffer.includes('eteradmin')) {
-    adminBuffer = '';
-    showAdminPanel();
-  }
-});
-
-// 4. URL parameter
-if (window.location.search.includes('admin=1') || window.location.hash === '#admin') {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', showAdminPanel);
-  } else {
-    showAdminPanel();
-  }
-}
-
 console.log('=== ETER FEEDBACK ===');
-console.log('Admin: Ctrl+Shift+A, Alt+A, Shift+A, duplo-Shift, digite eteradmin, botão no footer, ?admin=1, openAdminPanel()');
+console.log('Admin: duplo-Shift (apertar Shift 2x rápido)');
 console.log('Senha: eter2026');
+console.log('Reset: ?reset=1 na URL');
 </script>
 
 
 
 <!-- Admin Panel -->
-<div class="admin-panel" id="adminPanel">
-    <div class="admin-header">
-      <h2>📊 Painel de Dados — ÉTER Feedback</h2>
-      <div class="admin-actions">
-        <button class="admin-btn" onclick="exportFeedbacks()">📥 Exportar JSON</button>
-        <button class="admin-btn" onclick="exportCSV()">📄 Exportar CSV</button>
-        <button class="admin-btn danger" onclick="clearAllData()">🗑️ Limpar Tudo</button>
-        <button class="admin-btn" onclick="showForm()">📝 Voltar ao Form</button>
-      </div>
-    </div>
 
-    <div class="admin-stats" id="adminStats">
-      <div class="stat-card">
-        <div class="stat-value" id="statTotal">0</div>
-        <div class="stat-label">Total de Respostas</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="statNPS">0</div>
-        <div class="stat-label">NPS Médio</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="statDesign">0</div>
-        <div class="stat-label">Design Médio</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="statEfet">0</div>
-        <div class="stat-label">Efetividade Média</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="statTopico">—</div>
-        <div class="stat-label">Tópico Mais Votado</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="statMinijogoMenos">—</div>
-        <div class="stat-label">Minijogo Menos Votado</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="statTopicoMenos">—</div>
-        <div class="stat-label">Tópico Menos Votado</div>
-      </div>
-    </div>
-    
-
-<div class="admin-tabs">
-      <button class="admin-tab active" onclick="switchTab('tab-rankings')" data-tab="tab-rankings">🏆 Rankings</button>
-      <button class="admin-tab" onclick="switchTab('tab-avaliacoes')" data-tab="tab-avaliacoes">⭐ Avaliações</button>
-      <button class="admin-tab" onclick="switchTab('tab-uso')" data-tab="tab-uso">📊 Uso & Tempo</button>
-      <button class="admin-tab" onclick="switchTab('tab-nps')" data-tab="tab-nps">📢 NPS & Humor</button>
-      
-      <button class="admin-tab" onclick="switchTab('tab-sugestoes')" data-tab="tab-sugestoes">💡 Sugestões</button>
-      <button class="admin-tab" onclick="switchTab('tab-tabela')" data-tab="tab-tabela">📋 Tabela Completa</button>
-      <button class="admin-tab" onclick="switchTab('tab-todos')" data-tab="tab-todos">📋 Todos os Dados</button>
-    </div>      
-
-
-    <!-- TAB: Rankings -->
-    <div class="tab-content active" id="tab-rankings">
-      <div class="stats-dashboard">
-        <div class="stat-section">
-          <h4><span class="icon">🏆</span> Ranking dos Minijogos (Mais Útil → Menos Útil)</h4>
-          <div id="rankingChart"></div>
-        </div>
-        <div class="stat-section">
-          <h4><span class="icon">🎯</span> Tópico que MAIS Ajudou</h4>
-          <div id="topicoMaisChart"></div>
-        </div>
-        <div class="stat-section">
-          <h4><span class="icon">🎮</span> Minijogo que MENOS Ajudou</h4>
-          <div id="minijogoMenosChart"></div>
-        </div>
-        <div class="stat-section">
-          <h4><span class="icon">📉</span> Tópicos que MENOS Ajudaram</h4>
-          <div id="topicosMenosChart"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: Avaliações -->
-    <div class="tab-content" id="tab-avaliacoes">
-      <div class="stats-dashboard">
-        <div class="stat-section">
-          <h4><span class="icon">⭐</span> Média das Avaliações por Estrela</h4>
-          <div id="ratingsChart"></div>
-        </div>
-        <div class="stat-section">
-          <h4><span class="icon">📊</span> Distribuição das Notas (Design)</h4>
-          <div id="designDistChart"></div>
-        </div>
-        <div class="stat-section">
-          <h4><span class="icon">📊</span> Distribuição das Notas (Efetividade)</h4>
-          <div id="efetDistChart"></div>
-                <div class="stat-section">
-          <h4><span class="icon">📊</span> Nota Mais Escolhida (Maioria)</h4>
-          <div id="majorityChart"></div>
-        </div>
-
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: Uso & Tempo -->
-    <div class="tab-content" id="tab-uso">
-      <div class="stats-dashboard">
-        <div class="stat-section">
-          <h4><span class="icon">🔄</span> Frequência de Uso</h4>
-          <div id="usoChart"></div>
-        </div>
-        <div class="stat-section">
-          <h4><span class="icon">⏱️</span> Tempo no Site</h4>
-          <div id="tempoChart"></div>
-        </div>
-        <div class="stat-section">
-          <h4><span class="icon">📈</span> Resumo de Uso</h4>
-          <div id="usoResumo"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: NPS & Humor -->
-    <div class="tab-content" id="tab-nps">
-      <div class="stats-dashboard">
-        <div class="stat-section">
-          <h4><span class="icon">📢</span> NPS — Detratores, Passivos e Promotores</h4>
-          <div id="npsChart"></div>
-        </div>
-        <div class="stat-section">
-          <h4><span class="icon">📊</span> Distribuição do NPS</h4>
-          <div id="npsDistChart"></div>
-        </div>
-        <div class="stat-section">
-          <h4><span class="icon">💭</span> Como as Pessoas se Sentiram Depois</h4>
-          <div id="moodChart"></div>
-        </div>
-      </div>
-    </div>
-
-    
-
-        <!-- TAB: O que Falta & Fricção -->
-    <div class="tab-content" id="tab-sugestoes">
-      <div class="stats-dashboard">
-        <div class="stat-section" style="grid-column: 1 / -1;">
-          <h4><span class="icon">💡</span> Todas as Sugestões</h4>
-          <div class="suggestions-list" id="suggestionsList"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: Tabela Completa -->
-    <div class="tab-content" id="tab-tabela">
-      <div id="feedbackList"></div>
-    
-    <!-- TAB: Todos os Dados -->
-    <div class="tab-content" id="tab-todos">
-      <div class="stats-dashboard">
-        <div class="stat-section" style="grid-column: 1 / -1;">
-          <h4><span class="icon">🏆</span> Todos os Rankings Individuais</h4>
-          <div id="allRankings"></div>
-        </div>
-        <div class="stat-section" style="grid-column: 1 / -1;">
-          <h4><span class="icon">⭐</span> Todas as Avaliações Individuais</h4>
-          <div id="allRatings"></div>
-        </div>
-        <div class="stat-section" style="grid-column: 1 / -1;">
-          <h4><span class="icon">📢</span> Todos os NPS Individuais</h4>
-          <div id="allNPS"></div>
-        </div>
-        <div class="stat-section" style="grid-column: 1 / -1;">
-          <h4><span class="icon">💭</span> Todos os Humores Individuais</h4>
-          <div id="allMoods"></div>
-        </div>
-      </div>
-
-      </div>
-    </div></div>
 
 </body>
 </html>
