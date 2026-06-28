@@ -864,10 +864,8 @@
     <!-- SEÇÃO 1: CONTEXTO -->
     <div class="form-section">
       <div class="section-title"><span class="icon">🧭</span> Sobre sua experiência</div>
-      <div class="section-desc">Você testou o ÉTER por cerca de 1 hora. Conta pra gente o que funcionou, o que não funcionou e o que pode melhorar.</div>
-      <div class="device-info" style="margin-top:0.75rem;">
-        💡 Este formulário pode ser preenchido apenas uma vez por dispositivo.
-      </div>
+      <div class="section-desc">Você testou o ÉTER por cerca de 1 hora. Descreve como foi — o que você usou, o que sentiu, o que funcionou e o que não funcionou.</div>
+      <textarea class="text-area" name="sobre_experiencia" placeholder="Conta aqui como foi seu teste de 1h no ÉTER. O que você fez? O que achou?" style="margin-top:1rem; min-height:100px;"></textarea>
     </div>
 
     <!-- SEÇÃO 2: TÓPICOS -->
@@ -2220,11 +2218,11 @@ function exportFeedbacks() {
 function exportCSV() {
   const feedbacks = JSON.parse(localStorage.getItem('eter_feedbacks') || '[]');
   if (feedbacks.length === 0) return;
-  const headers = ['Data', 'Uso', 'Tempo', 'Topico', 'NPS', 'Design', 'Usabilidade', 'Audio', 'Efetividade', 'Performance', 'Humor', 'MinijogoMenos', 'TopicosMenos', 'Sugestao', 'Ranking'];
+  const headers = ['Data', 'SobreExperiencia', 'Topico', 'NPS', 'Design', 'Usabilidade', 'Audio', 'Efetividade', 'Performance', 'Humor', 'MinijogoMenos', 'TopicosMenos', 'Sugestao', 'Ranking'];
   let csv = headers.join(',') + '\n';
   feedbacks.forEach(f => {
     const row = [
-      f.timestamp, f.usage_count, f.usage_time, f.topico_mais_ajudou, f.nps,
+      f.timestamp, f.sobre_experiencia, f.topico_mais_ajudou, f.nps,
       f.ratings?.design, f.ratings?.usabilidade, f.ratings?.audio, f.ratings?.efetividade, f.ratings?.performance,
       f.estado_emocional, f.minijogo_menos_ajudou, f.topicos_menos_ajudaram,
       '"' + (f.sugestoes || '').replace(/"/g, '""') + '"', f.ranking_minijogos
