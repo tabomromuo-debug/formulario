@@ -1,0 +1,2330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ÉTER — Feedback</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-primary: #060914;
+      --bg-secondary: #0d1321;
+      --bg-tertiary: #131b2e;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-teal: #2dd4bf;
+      --accent-lavender: #c084fc;
+      --accent-rose: #fb7185;
+      --accent-amber: #fbbf24;
+      --accent-cyan: #67e8f9;
+      --border-color: rgba(255,255,255,0.06);
+      --glow-teal: 0 0 30px rgba(45,212,191,0.25);
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: rgba(45,212,191,0.3); border-radius: 3px; }
+    ::selection { background: rgba(45,212,191,0.25); color: var(--text-primary); }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 200;
+      letter-spacing: 0.25em;
+      color: var(--text-primary);
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+    }
+    .logo-icon {
+      width: 28px; height: 28px;
+      color: var(--accent-teal);
+      filter: drop-shadow(0 0 8px rgba(45,212,191,0.4));
+    }
+    .header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .header h1 .gradient {
+      background: linear-gradient(135deg, var(--accent-teal), var(--accent-lavender), var(--accent-rose));
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header p {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      font-weight: 300;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .header .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: rgba(45,212,191,0.08);
+      border: 1px solid rgba(45,212,191,0.2);
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      color: var(--accent-teal);
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .contact-box {
+      background: rgba(45,212,191,0.05);
+      border: 1px solid rgba(45,212,191,0.15);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .contact-box .contact-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+    .contact-box .contact-email {
+      font-size: 1.1rem;
+      color: var(--accent-teal);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .contact-box .contact-email a {
+      color: var(--accent-teal);
+      text-decoration: none;
+    }
+    .contact-box .contact-email a:hover {
+      text-decoration: underline;
+    }
+
+    .form-section {
+      background: rgba(13, 19, 33, 0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 1.25rem;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.4s ease;
+    }
+    .form-section:hover {
+      border-color: rgba(45,212,191,0.1);
+    }
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-title .icon { font-size: 1.2rem; }
+    .section-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .rating-group { margin-bottom: 1.25rem; }
+    .rating-label {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .stars { display: flex; gap: 0.4rem; }
+    .star {
+      width: 32px; height: 32px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-muted);
+    }
+    .star:hover, .star.active {
+      color: var(--accent-amber);
+      filter: drop-shadow(0 0 8px rgba(251,191,36,0.4));
+      transform: scale(1.15);
+    }
+    .star svg { width: 100%; height: 100%; }
+
+    .topic-grid { display: grid; gap: 0.75rem; }
+    .topic-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: rgba(13,19,33,0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 0.875rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .topic-card:hover {
+      border-color: rgba(45,212,191,0.2);
+      background: rgba(45,212,191,0.04);
+    }
+    .topic-card.selected {
+      border-color: var(--accent-teal);
+      background: rgba(45,212,191,0.08);
+      box-shadow: 0 0 20px rgba(45,212,191,0.1);
+    }
+    .topic-card .topic-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      background: rgba(45,212,191,0.08);
+      border: 1px solid rgba(45,212,191,0.15);
+    }
+    .topic-card .topic-info { flex: 1; }
+    .topic-card .topic-name { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
+    .topic-card .topic-desc { font-size: 0.75rem; color: var(--text-muted); }
+    .topic-card .check {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .topic-card.selected .check {
+      background: var(--accent-teal);
+      border-color: var(--accent-teal);
+      box-shadow: 0 0 10px rgba(45,212,191,0.3);
+    }
+    .topic-card.selected .check::after {
+      content: '✓';
+      color: var(--bg-primary);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .ranking-list { display: flex; flex-direction: column; gap: 0.6rem; }
+    .ranking-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      background: rgba(13,19,33,0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      cursor: grab;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    .ranking-item:hover { border-color: rgba(45,212,191,0.15); }
+    .ranking-item.dragging { opacity: 0.6; cursor: grabbing; }
+    .ranking-item .rank-num {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(45,212,191,0.1);
+      border: 1px solid rgba(45,212,191,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: var(--accent-teal);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .ranking-item .rank-num.top {
+      background: linear-gradient(135deg, var(--accent-amber), #d97706);
+      color: var(--bg-primary);
+      border-color: transparent;
+    }
+    .ranking-item .rank-name { flex: 1; font-size: 0.9rem; color: var(--text-primary); }
+    .ranking-item .drag-handle { color: var(--text-muted); cursor: grab; padding: 0.25rem; }
+    .ranking-item .drag-handle svg { width: 18px; height: 18px; }
+
+    .text-area {
+      width: 100%; min-height: 120px; padding: 1rem;
+      background: rgba(13,19,33,0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 0.875rem;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem; line-height: 1.6;
+      resize: vertical; outline: none;
+      transition: all 0.3s ease;
+    }
+    .text-area::placeholder { color: var(--text-muted); font-style: italic; }
+    .text-area:focus {
+      border-color: rgba(45,212,191,0.3);
+      box-shadow: 0 0 20px rgba(45,212,191,0.05);
+    }
+
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 0.75rem;
+    }
+    .mood-option {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.4rem;
+      padding: 1rem 0.5rem;
+      background: rgba(13,19,33,0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .mood-option:hover { border-color: rgba(45,212,191,0.2); transform: translateY(-3px); }
+    .mood-option.selected {
+      border-color: var(--accent-teal);
+      background: rgba(45,212,191,0.08);
+      box-shadow: 0 8px 25px rgba(45,212,191,0.1);
+    }
+    .mood-option .mood-emoji { font-size: 2rem; transition: transform 0.3s ease; }
+    .mood-option:hover .mood-emoji { transform: scale(1.2); }
+    .mood-option .mood-name { font-size: 0.75rem; color: var(--text-secondary); font-weight: 500; }
+
+    .slider-group { margin-bottom: 1.5rem; }
+    .slider-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+    .slider-label { font-size: 0.9rem; color: var(--text-primary); }
+    .slider-value { font-size: 1.25rem; font-weight: 200; color: var(--accent-teal); font-family: 'Cormorant Garamond', serif; }
+    .slider-track {
+      width: 100%; height: 6px;
+      -webkit-appearance: none; appearance: none;
+      background: linear-gradient(90deg, var(--accent-rose), var(--accent-amber), var(--accent-teal));
+      border-radius: 3px; outline: none; cursor: pointer;
+    }
+    .slider-track::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--text-primary);
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(45,212,191,0.5);
+      border: 2px solid var(--accent-teal);
+    }
+    .slider-labels { display: flex; justify-content: space-between; margin-top: 0.4rem; font-size: 0.7rem; color: var(--text-muted); }
+
+    .submit-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--accent-teal), #0d9488);
+      color: var(--bg-primary);
+      border: none; border-radius: 9999px;
+      font-size: 1rem; font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: all 0.35s ease;
+      box-shadow: var(--glow-teal);
+      margin-top: 1rem;
+    }
+    .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(45,212,191,0.35); }
+    .submit-btn:active { transform: translateY(0); }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: rgba(13,19,33,0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 1.25rem;
+      animation: fadeInUp 0.6s ease-out;
+    }
+    .success-message.show { display: block; }
+    .success-message .success-icon { font-size: 4rem; margin-bottom: 1rem; }
+    .success-message h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300;
+      color: var(--accent-teal); margin-bottom: 0.5rem;
+    }
+    .success-message p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+
+    /* Admin Panel */
+    .admin-panel { display: none; padding: 2rem 0; }
+    .admin-panel.show { display: block; }
+    .admin-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .admin-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300; color: var(--accent-teal);
+    }
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: rgba(13,19,33,0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.25rem; text-align: center;
+    }
+    .stat-card .stat-value { font-size: 2rem; font-weight: 600; color: var(--accent-teal); font-family: 'Cormorant Garamond', serif; }
+    .stat-card .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .admin-actions { display: flex; gap: 0.75rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .admin-btn {
+      padding: 0.6rem 1.25rem;
+      background: rgba(45,212,191,0.1);
+      border: 1px solid rgba(45,212,191,0.3);
+      border-radius: 0.75rem;
+      color: var(--accent-teal);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem; cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .admin-btn:hover { background: rgba(45,212,191,0.2); }
+    .admin-btn.danger {
+      background: rgba(251,113,133,0.1);
+      border-color: rgba(251,113,133,0.3);
+      color: var(--accent-rose);
+    }
+    .admin-btn.danger:hover { background: rgba(251,113,133,0.2); }
+
+    .feedback-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.8rem; margin-bottom: 1rem;
+    }
+    .feedback-table th {
+      background: rgba(13,19,33,0.8);
+      padding: 0.75rem; text-align: left;
+      color: var(--accent-teal); font-weight: 500;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky; top: 0;
+    }
+    .feedback-table td {
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      max-width: 150px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .feedback-table tr:hover td { background: rgba(45,212,191,0.03); cursor: pointer; }
+    .feedback-table .cell-nps { font-weight: 600; color: var(--accent-amber); }
+    .feedback-table .cell-rating { color: var(--accent-amber); }
+
+    .feedback-detail {
+      background: rgba(13,19,33,0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.5rem; margin-bottom: 1rem;
+      display: none;
+    }
+    .feedback-detail.show { display: block; animation: fadeInUp 0.3s ease-out; }
+    .detail-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1rem; padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .detail-date { font-size: 0.75rem; color: var(--text-muted); }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .detail-item {
+      background: rgba(6,9,20,0.4);
+      border-radius: 0.5rem; padding: 0.75rem;
+    }
+    .detail-item .detail-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+    .detail-item .detail-value { font-size: 0.9rem; color: var(--text-primary); }
+    .detail-sugestao {
+      margin-top: 1rem; padding: 1rem;
+      background: rgba(6,9,20,0.4);
+      border-radius: 0.5rem;
+      font-size: 0.9rem; color: var(--text-primary); line-height: 1.6;
+    }
+
+    .login-overlay {
+      position: fixed; inset: 0;
+      background: rgba(6,9,20,0.95);
+      display: none;
+      align-items: center; justify-content: center;
+      z-index: 1000;
+    }
+    .login-overlay.show { display: flex; }
+    .login-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 1.25rem;
+      padding: 2.5rem;
+      width: 90%; max-width: 360px;
+      text-align: center;
+    }
+    .login-box h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem; font-weight: 300;
+      color: var(--accent-teal); margin-bottom: 0.5rem;
+    }
+    .login-box p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .login-box input {
+      width: 100%; padding: 0.875rem 1rem;
+      background: rgba(13,19,33,0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem; margin-bottom: 1rem; outline: none;
+    }
+    .login-box input:focus { border-color: rgba(45,212,191,0.3); }
+    .login-box .login-btn {
+      width: 100%; padding: 0.875rem;
+      background: linear-gradient(135deg, var(--accent-teal), #0d9488);
+      color: var(--bg-primary);
+      border: none; border-radius: 0.75rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem; font-weight: 500; cursor: pointer;
+    }
+    .login-box .login-error { color: var(--accent-rose); font-size: 0.8rem; margin-top: 0.75rem; display: none; }
+
+    .footer {
+      text-align: center;
+      margin-top: 3rem; padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 200;
+      letter-spacing: 0.3em; color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .footer-text { font-size: 0.75rem; color: var(--text-muted); }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    
+    /* Toggle Switch */
+    .toggle-group { display: flex; flex-direction: column; gap: 0.75rem; }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.875rem 1rem;
+      background: rgba(13,19,33,0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .toggle-row:hover { border-color: rgba(45,212,191,0.2); }
+    .toggle-row.active {
+      border-color: var(--accent-teal);
+      background: rgba(45,212,191,0.08);
+    }
+    .toggle-row .toggle-label { font-size: 0.85rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem; }
+    .toggle-row .toggle-switch {
+      width: 44px; height: 24px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      position: relative;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .toggle-row.active .toggle-switch { background: var(--accent-teal); }
+    .toggle-row .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 18px; height: 18px;
+      background: var(--text-primary);
+      border-radius: 50%;
+      top: 3px; left: 3px;
+      transition: all 0.3s ease;
+    }
+    .toggle-row.active .toggle-switch::after { left: 23px; }
+
+    /* Priority Grid */
+    .priority-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.6rem; }
+    .priority-card {
+      padding: 1rem;
+      background: rgba(13,19,33,0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .priority-card:hover { border-color: rgba(45,212,191,0.2); transform: translateY(-2px); }
+    .priority-card.selected {
+      border-color: var(--accent-teal);
+      background: rgba(45,212,191,0.08);
+      box-shadow: 0 0 20px rgba(45,212,191,0.1);
+    }
+    .priority-card .priority-num {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-teal);
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .priority-card .priority-label { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+    /* Device Info */
+    .device-info {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 0.5rem;
+      background: rgba(13,19,33,0.3);
+      border-radius: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+@media (max-width: 480px) {
+      .container { padding: 2rem 1rem 4rem; }
+      .form-section { padding: 1.5rem; }
+      .mood-grid { grid-template-columns: repeat(3, 1fr); }
+      .admin-stats { grid-template-columns: repeat(2, 1fr); }
+      .feedback-table { font-size: 0.7rem; }
+      .feedback-table th, .feedback-table td { padding: 0.5rem; }
+      .admin-header { flex-direction: column; align-items: flex-start; }
+    }
+      /* Admin Tabs */
+    .admin-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+    .admin-tab {
+      padding: 0.6rem 1rem;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .admin-tab:hover {
+      color: var(--text-primary);
+      background: rgba(45,212,191,0.05);
+    }
+    .admin-tab.active {
+      color: var(--accent-teal);
+      border-color: rgba(45,212,191,0.3);
+      background: rgba(45,212,191,0.08);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+      animation: fadeInUp 0.4s ease-out;
+    }
+    .stats-dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .stat-section {
+      background: rgba(13,19,33,0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+    .stat-section h4 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .bar-chart { display: flex; flex-direction: column; gap: 0.6rem; }
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .bar-label {
+      width: 140px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      text-align: right;
+    }
+    .bar-track {
+      flex: 1;
+      height: 28px;
+      background: rgba(13,19,33,0.6);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 0.5rem;
+      transition: width 0.6s ease;
+      min-width: 30px;
+    }
+    .bar-fill.gold { background: linear-gradient(90deg, var(--accent-amber), #d97706); }
+    .bar-fill.silver { background: linear-gradient(90deg, #94a3b8, #64748b); }
+    .bar-fill.bronze { background: linear-gradient(90deg, #cd7f32, #a0522d); }
+    .bar-fill.teal { background: linear-gradient(90deg, var(--accent-teal), #0d9488); }
+    .bar-fill.rose { background: linear-gradient(90deg, var(--accent-rose), #e11d48); }
+    .bar-fill.lavender { background: linear-gradient(90deg, var(--accent-lavender), #9333ea); }
+    .bar-fill.amber { background: linear-gradient(90deg, var(--accent-amber), #d97706); }
+    .bar-fill.promotores { background: linear-gradient(90deg, var(--accent-teal), #0d9488); }
+    .bar-fill.passivos { background: linear-gradient(90deg, var(--accent-amber), #d97706); }
+    .bar-fill.detratores { background: linear-gradient(90deg, var(--accent-rose), #e11d48); }
+    .bar-count {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--bg-primary);
+    }
+    .rank-display {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .rank-display:last-child { border-bottom: none; }
+    .rank-pos {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .rank-pos.gold { background: linear-gradient(135deg, var(--accent-amber), #d97706); color: var(--bg-primary); }
+    .rank-pos.silver { background: linear-gradient(135deg, #94a3b8, #64748b); color: var(--bg-primary); }
+    .rank-pos.bronze { background: linear-gradient(135deg, #cd7f32, #a0522d); color: var(--bg-primary); }
+    .rank-pos.normal { background: rgba(45,212,191,0.1); color: var(--accent-teal); border: 1px solid rgba(45,212,191,0.2); }
+    .rank-display .rank-name { flex: 1; font-size: 0.85rem; color: var(--text-primary); }
+    .rank-bar {
+      flex: 1;
+      height: 6px;
+      background: rgba(13,19,33,0.6);
+      border-radius: 3px;
+      overflow: hidden;
+      max-width: 120px;
+    }
+    .rank-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-teal), #0d9488); border-radius: 3px; }
+    .rank-score { font-size: 0.75rem; color: var(--text-muted); width: 70px; text-align: right; }
+    .star-display {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .star-display:last-child { border-bottom: none; }
+    .star-label { width: 140px; font-size: 0.85rem; color: var(--text-secondary); flex-shrink: 0; }
+    .stars-bar { display: flex; gap: 0.25rem; flex: 1; }
+    .stars-bar svg { width: 18px; height: 18px; }
+    .star-avg { font-size: 1rem; font-weight: 600; color: var(--accent-amber); width: 40px; text-align: right; }
+    .nps-gauge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .nps-circle {
+      text-align: center;
+      padding: 1rem;
+      border-radius: 1rem;
+      min-width: 80px;
+    }
+    .nps-circle.detratores { background: rgba(251,113,133,0.1); border: 1px solid rgba(251,113,133,0.2); }
+    .nps-circle.passivos { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); }
+    .nps-circle.promotores { background: rgba(45,212,191,0.1); border: 1px solid rgba(45,212,191,0.2); }
+    .nps-num { font-size: 1.75rem; font-weight: 700; font-family: 'Cormorant Garamond', serif; }
+    .nps-circle.detratores .nps-num { color: var(--accent-rose); }
+    .nps-circle.passivos .nps-num { color: var(--accent-amber); }
+    .nps-circle.promotores .nps-num { color: var(--accent-teal); }
+    .nps-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .mood-grid-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 1rem;
+    }
+    .mood-stat {
+      text-align: center;
+      padding: 1rem;
+      background: rgba(13,19,33,0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 1rem;
+    }
+    .mood-stat .mood-emoji { font-size: 2rem; }
+    .mood-stat .mood-count { font-size: 1.5rem; font-weight: 600; color: var(--accent-teal); font-family: 'Cormorant Garamond', serif; }
+    .mood-stat .mood-name { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .usage-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .usage-stat:last-child { border-bottom: none; }
+    .usage-label { font-size: 0.85rem; color: var(--text-secondary); }
+    .usage-value { font-size: 1.1rem; font-weight: 600; color: var(--accent-teal); font-family: 'Cormorant Garamond', serif; }
+    .suggestions-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .suggestion-item {
+      background: rgba(6,9,20,0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+    .suggestion-item.sug-empty {
+      color: var(--text-muted);
+      text-align: center;
+      font-style: italic;
+    }
+    .sug-date { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; }
+
+  </style>
+</head>
+<body>
+
+<!-- Login Overlay for Admin -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <h3>🔐 Painel Admin</h3>
+    <p>Acesso restrito aos dados do formulário</p>
+    <input type="password" id="adminPass" placeholder="Senha de acesso" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-error" id="loginError">Senha incorreta</div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      Formulário Anônimo
+    </div>
+    <a href="index.html" class="logo">
+      <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14 14 0 0 0 0 20 14 14 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+      ÉTER
+    </a>
+    <h1>Como foi sua experiência?</h1>
+    <p>Sua opinião ajuda a gente a entender o que funciona de verdade e o que pode melhorar. Tudo aqui é anônimo — não precisa se identificar.</p>
+  </div>
+
+  <!-- Contact Email Box (REPLACES email input) -->
+  <div class="contact-box">
+    <div class="contact-label">📧 Quer falar com a gente diretamente?</div>
+    <div class="contact-email"><a href="mailto:feedback@eter.app">feedback@eter.app</a></div>
+  </div>
+
+  <!-- ===== FORM VIEW ===== -->
+  <div id="formView">
+  <form id="feedbackForm">
+
+    <!-- SEÇÃO 1: CONTEXTO -->
+    <div class="form-section">
+      <div class="section-title"><span class="icon">🧭</span> Sobre sua experiência</div>
+      <div class="section-desc">Você testou o ÉTER por cerca de 1 hora. Conta pra gente o que funcionou, o que não funcionou e o que pode melhorar.</div>
+      <div class="device-info" style="margin-top:0.75rem;">
+        💡 Este formulário pode ser preenchido apenas uma vez por dispositivo.
+      </div>
+    </div>
+
+    <!-- SEÇÃO 2: TÓPICOS -->
+    <div class="form-section">
+      <div class="section-title"><span class="icon">🎯</span> Qual tópico mais te ajudou?</div>
+      <div class="section-desc">Escolha <b>um</b> — aquele que você sentiu que fez mais diferença no seu dia.</div>
+      <div class="topic-grid" id="topicGrid">
+        <div class="topic-card" onclick="selectTopic(this, 'sons')">
+          <div class="topic-icon">🎵</div>
+          <div class="topic-info">
+            <div class="topic-name">Sons Terapêuticos</div>
+            <div class="topic-desc">Chuva, oceano, binaurais, Solfeggio</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectTopic(this, 'respirar')">
+          <div class="topic-icon">🫁</div>
+          <div class="topic-info">
+            <div class="topic-name">Respirar</div>
+            <div class="topic-desc">Coerência cardíaca, Box Breathing</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectTopic(this, 'jogar')">
+          <div class="topic-icon">🎮</div>
+          <div class="topic-info">
+            <div class="topic-name">Brincar</div>
+            <div class="topic-desc">Mandalas, constelações, Deixar Ir</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectTopic(this, 'criar')">
+          <div class="topic-icon">✨</div>
+          <div class="topic-info">
+            <div class="topic-name">Fazer / Criar</div>
+            <div class="topic-desc">Handpan, kalimba, mandala de luz, areia</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectTopic(this, 'meditar')">
+          <div class="topic-icon">🧘</div>
+          <div class="topic-info">
+            <div class="topic-name">Meditar</div>
+            <div class="topic-desc">Timer de meditação com sino tibetano</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectTopic(this, 'dormir')">
+          <div class="topic-icon">🌙</div>
+          <div class="topic-info">
+            <div class="topic-name">Dormir Melhor</div>
+            <div class="topic-desc">4-7-8, ondas delta/theta, higiene do sono</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectTopic(this, 'gratidao')">
+          <div class="topic-icon">🙏</div>
+          <div class="topic-info">
+            <div class="topic-name">Gratidão</div>
+            <div class="topic-desc">Diário de gratidão</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectTopic(this, 'desconectar')">
+          <div class="topic-icon">📵</div>
+          <div class="topic-info">
+            <div class="topic-name">Desconectar</div>
+            <div class="topic-desc">Ferramentas contra vício em telas</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectTopic(this, 'refletir')">
+          <div class="topic-icon">💭</div>
+          <div class="topic-info">
+            <div class="topic-name">Reflexões</div>
+            <div class="topic-desc">Pensamentos de filósofos e poetas</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectTopic(this, 'checkin')">
+          <div class="topic-icon">❤️</div>
+          <div class="topic-info">
+            <div class="topic-name">Como você se sente?</div>
+            <div class="topic-desc">Check-in emocional</div>
+          </div>
+          <div class="check"></div>
+        </div>
+      </div>
+      <input type="hidden" name="topico_mais_ajudou" id="topicoMaisAjudou">
+    </div>
+
+    <!-- SEÇÃO 3: MINIJOGOS — RANKING -->
+    <div class="form-section">
+      <div class="section-title"><span class="icon">🏆</span> Ranqueie os minijogos</div>
+      <div class="section-desc">Arraste para ordenar do <b>mais útil</b> (topo) ao <b>menos útil</b> (base). Clique e segure para mover.</div>
+
+      <div class="ranking-list" id="rankingList">
+        <!-- Jogos Calmantes -->
+        <div class="ranking-item" draggable="true" data-game="mandala">
+          <div class="rank-num">1</div>
+          <div class="rank-name">🎨 Mandala Zen (colorir)</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="constelacoes">
+          <div class="rank-num">2</div>
+          <div class="rank-name">⭐ Constelações (conectar estrelas)</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="deixar_ir">
+          <div class="rank-num">3</div>
+          <div class="rank-name">🪨 Deixar Ir (soltar a pedra)</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <!-- Espaço Criativo -->
+        <div class="ranking-item" draggable="true" data-game="handpan">
+          <div class="rank-num">4</div>
+          <div class="rank-name">🛸 Handpan Virtual</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="mandala_luz">
+          <div class="rank-num">5</div>
+          <div class="rank-name">💡 Mandala de Luz (desenhar)</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="areia">
+          <div class="rank-num">6</div>
+          <div class="rank-name">🏖️ Fluxo de Areia</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="tetris">
+          <div class="rank-num">7</div>
+          <div class="rank-name">🧩 Tetris Zen</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="kalimba">
+          <div class="rank-num">8</div>
+          <div class="rank-name">🎹 Kalimba Virtual</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="terapia_cores">
+          <div class="rank-num">9</div>
+          <div class="rank-name">🌈 Terapia das Cores</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <!-- Respiração -->
+        <div class="ranking-item" draggable="true" data-game="coerencia_cardiaca">
+          <div class="rank-num">10</div>
+          <div class="rank-name">❤️ Coerência Cardíaca</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="box_breathing">
+          <div class="rank-num">11</div>
+          <div class="rank-name">📦 Box Breathing</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="respiracao_478">
+          <div class="rank-num">12</div>
+          <div class="rank-name">🌬️ Respiração 4-7-8</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <!-- Sons Terapêuticos -->
+        <div class="ranking-item" draggable="true" data-game="ondas_binaurais">
+          <div class="rank-num">13</div>
+          <div class="rank-name">🧠 Ondas Binaurais</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="chuva">
+          <div class="rank-num">14</div>
+          <div class="rank-name">🌧️ Chuva Suave</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="oceano">
+          <div class="rank-num">15</div>
+          <div class="rank-name">🌊 Ondas do Oceano</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="floresta">
+          <div class="rank-num">16</div>
+          <div class="rank-name">🌲 Floresta (sons)</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="som_meditacao">
+          <div class="rank-num">17</div>
+          <div class="rank-name">🔔 Som de Meditação</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="ruido_branco">
+          <div class="rank-num">18</div>
+          <div class="rank-name">⬜ Ruído Branco</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="solfeggio">
+          <div class="rank-num">19</div>
+          <div class="rank-name">🎵 852 Hz — Solfeggio</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="ondas_delta">
+          <div class="rank-num">20</div>
+          <div class="rank-name">💤 Ondas Delta/Theta (sono)</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <!-- Outros -->
+        <div class="ranking-item" draggable="true" data-game="timer_meditacao">
+          <div class="rank-num">21</div>
+          <div class="rank-name">⏱️ Timer de Meditação</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+        <div class="ranking-item" draggable="true" data-game="diario_gratidao">
+          <div class="rank-num">22</div>
+          <div class="rank-name">🙏 Diário de Gratidão</div>
+          <div class="drag-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg></div>
+        </div>
+      </div>
+      <input type="hidden" name="ranking_minijogos" id="rankingMinijogos">
+    </div>
+
+    <!-- SEÇÃO 4: AVALIAÇÃO POR ESTRELA -->
+    <div class="form-section">
+      <div class="section-title"><span class="icon">⭐</span> Avaliação geral</div>
+      <div class="section-desc">De 1 a 5 estrelas, como você avalia cada aspecto do ÉTER?</div>
+
+      <div class="rating-group">
+        <span class="rating-label">Design e aparência visual</span>
+        <div class="stars" data-rating="design">
+          <span class="star" onclick="setRating('design', 1)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('design', 2)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('design', 3)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('design', 4)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('design', 5)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        </div>
+        <input type="hidden" name="rating_design" id="ratingDesign" value="0">
+      </div>
+
+      <div class="rating-group">
+        <span class="rating-label">Facilidade de uso / intuitividade</span>
+        <div class="stars" data-rating="usabilidade">
+          <span class="star" onclick="setRating('usabilidade', 1)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('usabilidade', 2)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('usabilidade', 3)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('usabilidade', 4)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('usabilidade', 5)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        </div>
+        <input type="hidden" name="rating_usabilidade" id="ratingUsabilidade" value="0">
+      </div>
+
+      <div class="rating-group">
+        <span class="rating-label">Qualidade dos sons / áudio</span>
+        <div class="stars" data-rating="audio">
+          <span class="star" onclick="setRating('audio', 1)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('audio', 2)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('audio', 3)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('audio', 4)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('audio', 5)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        </div>
+        <input type="hidden" name="rating_audio" id="ratingAudio" value="0">
+      </div>
+
+      <div class="rating-group">
+        <span class="rating-label">Efetividade real (sentiu que ajudou?)</span>
+        <div class="stars" data-rating="efetividade">
+          <span class="star" onclick="setRating('efetividade', 1)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('efetividade', 2)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('efetividade', 3)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('efetividade', 4)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('efetividade', 5)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        </div>
+        <input type="hidden" name="rating_efetividade" id="ratingEfetividade" value="0">
+      </div>
+
+      <div class="rating-group">
+        <span class="rating-label">Velocidade / performance (carregamento)</span>
+        <div class="stars" data-rating="performance">
+          <span class="star" onclick="setRating('performance', 1)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('performance', 2)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('performance', 3)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('performance', 4)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+          <span class="star" onclick="setRating('performance', 5)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        </div>
+        <input type="hidden" name="rating_performance" id="ratingPerformance" value="0">
+      </div>
+    </div>
+
+    <!-- SEÇÃO 5: ESTADO EMOCIONAL -->
+    <div class="form-section">
+      <div class="section-title"><span class="icon">💭</span> Como você se sente depois de usar?</div>
+      <div class="section-desc">Escolha o que mais se aproxima do seu estado atual.</div>
+      <div class="mood-grid" id="moodGrid">
+        <div class="mood-option" onclick="selectMood(this, 'mais_calm')">
+          <div class="mood-emoji">😌</div>
+          <div class="mood-name">Mais calmo</div>
+        </div>
+        <div class="mood-option" onclick="selectMood(this, 'mais_foc')">
+          <div class="mood-emoji">🎯</div>
+          <div class="mood-name">Mais focado</div>
+        </div>
+        <div class="mood-option" onclick="selectMood(this, 'mais_energ')">
+          <div class="mood-emoji">⚡</div>
+          <div class="mood-name">Mais energizado</div>
+        </div>
+        <div class="mood-option" onclick="selectMood(this, 'mais_trist')">
+          <div class="mood-emoji">😔</div>
+          <div class="mood-name">Mais triste</div>
+        </div>
+        <div class="mood-option" onclick="selectMood(this, 'sem_mudanc')">
+          <div class="mood-emoji">😐</div>
+          <div class="mood-name">Sem mudança</div>
+        </div>
+        <div class="mood-option" onclick="selectMood(this, 'outro')">
+          <div class="mood-emoji">💬</div>
+          <div class="mood-name">Outro</div>
+        </div>
+      </div>
+      <input type="hidden" name="estado_emocional" id="estadoEmocional">
+    </div>
+
+    <!-- SEÇÃO 6: SUGESTÕES -->
+    <div class="form-section">
+      <div class="section-title"><span class="icon">💡</span> O que faltou? O que mudaria?</div>
+      <div class="section-desc">Sua sugestão é ouro. Pode ser uma funcionalidade nova, um minijogo, um som, uma técnica de respiração... ou só algo que incomodou.</div>
+      <textarea class="text-area" name="sugestoes" placeholder="Escreve aqui o que vier na cabeça. Não precisa ser organizado — qualquer coisa ajuda."></textarea>
+    </div>
+
+<!-- SEÇÃO 7: RECOMENDAÇÃO -->
+    <div class="form-section">
+      <div class="section-title"><span class="icon">📢</span> Você indicaria o ÉTER pra alguém?</div>
+      <div class="section-desc">De 0 a 10, qual a chance de você recomendar o ÉTER pra um amigo ou familiar?</div>
+      <div class="slider-group">
+        <div class="slider-header">
+          <span class="slider-label">Nota de recomendação (NPS)</span>
+          <span class="slider-value" id="npsValue">7</span>
+        </div>
+        <input type="range" class="slider-track" min="0" max="10" value="7" id="npsSlider" name="nps"
+          oninput="document.getElementById('npsValue').textContent = this.value">
+        <div class="slider-labels">
+          <span>0 — Nunca</span>
+          <span>5</span>
+          <span>10 — Com certeza</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEÇÃO 8: MINIJOGOS — MENOS AJUDOU -->
+    <div class="form-section">
+      <div class="section-title"><span class="icon">🎮</span> Qual minijogo menos te ajudou?</div>
+      <div class="section-desc">Escolha <b>um</b> — aquele que você sentiu que fez menos diferença ou não funcionou pra você.</div>
+      <div class="topic-grid" id="minijogoMenosGrid">
+        <!-- Jogos Calmantes -->
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'mandala')">
+          <div class="topic-icon">🎨</div>
+          <div class="topic-info">
+            <div class="topic-name">Mandala Zen</div>
+            <div class="topic-desc">Colorir mandalas</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'constelacoes')">
+          <div class="topic-icon">⭐</div>
+          <div class="topic-info">
+            <div class="topic-name">Constelações</div>
+            <div class="topic-desc">Conectar estrelas</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'deixar_ir')">
+          <div class="topic-icon">🪨</div>
+          <div class="topic-info">
+            <div class="topic-name">Deixar Ir</div>
+            <div class="topic-desc">Soltar a pedra</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <!-- Espaço Criativo -->
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'handpan')">
+          <div class="topic-icon">🛸</div>
+          <div class="topic-info">
+            <div class="topic-name">Handpan Virtual</div>
+            <div class="topic-desc">Tocar handpan</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'mandala_luz')">
+          <div class="topic-icon">💡</div>
+          <div class="topic-info">
+            <div class="topic-name">Mandala de Luz</div>
+            <div class="topic-desc">Desenhar com luz</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'areia')">
+          <div class="topic-icon">🏖️</div>
+          <div class="topic-info">
+            <div class="topic-name">Fluxo de Areia</div>
+            <div class="topic-desc">Areia fluida</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'tetris')">
+          <div class="topic-icon">🧩</div>
+          <div class="topic-info">
+            <div class="topic-name">Tetris Zen</div>
+            <div class="topic-desc">Tetris relaxante</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'kalimba')">
+          <div class="topic-icon">🎹</div>
+          <div class="topic-info">
+            <div class="topic-name">Kalimba Virtual</div>
+            <div class="topic-desc">Tocar kalimba</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'terapia_cores')">
+          <div class="topic-icon">🌈</div>
+          <div class="topic-info">
+            <div class="topic-name">Terapia das Cores</div>
+            <div class="topic-desc">Exploração cromática</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <!-- Respiração -->
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'coerencia_cardiaca')">
+          <div class="topic-icon">❤️</div>
+          <div class="topic-info">
+            <div class="topic-name">Coerência Cardíaca</div>
+            <div class="topic-desc">Respiração guiada</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'box_breathing')">
+          <div class="topic-icon">📦</div>
+          <div class="topic-info">
+            <div class="topic-name">Box Breathing</div>
+            <div class="topic-desc">4-4-4-4 respiração</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'respiracao_478')">
+          <div class="topic-icon">🌬️</div>
+          <div class="topic-info">
+            <div class="topic-name">Respiração 4-7-8</div>
+            <div class="topic-desc">Técnica de sono</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <!-- Sons Terapêuticos -->
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'ondas_binaurais')">
+          <div class="topic-icon">🧠</div>
+          <div class="topic-info">
+            <div class="topic-name">Ondas Binaurais</div>
+            <div class="topic-desc">Frequências cerebrais</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'chuva')">
+          <div class="topic-icon">🌧️</div>
+          <div class="topic-info">
+            <div class="topic-name">Chuva Suave</div>
+            <div class="topic-desc">Som de chuva</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'oceano')">
+          <div class="topic-icon">🌊</div>
+          <div class="topic-info">
+            <div class="topic-name">Ondas do Oceano</div>
+            <div class="topic-desc">Som do mar</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'floresta')">
+          <div class="topic-icon">🌲</div>
+          <div class="topic-info">
+            <div class="topic-name">Floresta</div>
+            <div class="topic-desc">Sons da natureza</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'som_meditacao')">
+          <div class="topic-icon">🔔</div>
+          <div class="topic-info">
+            <div class="topic-name">Som de Meditação</div>
+            <div class="topic-desc">Taças tibetanas</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'ruido_branco')">
+          <div class="topic-icon">⬜</div>
+          <div class="topic-info">
+            <div class="topic-name">Ruído Branco</div>
+            <div class="topic-desc">Som constante</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'solfeggio')">
+          <div class="topic-icon">🎵</div>
+          <div class="topic-info">
+            <div class="topic-name">852 Hz — Solfeggio</div>
+            <div class="topic-desc">Frequência terapêutica</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'ondas_delta')">
+          <div class="topic-icon">💤</div>
+          <div class="topic-info">
+            <div class="topic-name">Ondas Delta/Theta</div>
+            <div class="topic-desc">Sons para dormir</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <!-- Outros -->
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'timer_meditacao')">
+          <div class="topic-icon">⏱️</div>
+          <div class="topic-info">
+            <div class="topic-name">Timer de Meditação</div>
+            <div class="topic-desc">Cronômetro com sino</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="selectMinijogoMenos(this, 'diario_gratidao')">
+          <div class="topic-icon">🙏</div>
+          <div class="topic-info">
+            <div class="topic-name">Diário de Gratidão</div>
+            <div class="topic-desc">Escrever gratidão</div>
+          </div>
+          <div class="check"></div>
+        </div>
+      </div>
+      <input type="hidden" name="minijogo_menos_ajudou" id="minijogoMenosAjudou">
+    </div>
+
+    <!-- SEÇÃO 9: TÓPICOS — MENOS AJUDARAM (MÚLTIPLA ESCOLHA) -->
+    <div class="form-section">
+      <div class="section-title"><span class="icon">📉</span> Quais tópicos menos te ajudaram?</div>
+      <div class="section-desc">Escolha <b>todos</b> que se aplicam — os que você sentiu que não fizeram diferença no seu dia.</div>
+      <div class="topic-grid" id="topicMenosGrid">
+        <div class="topic-card" onclick="toggleTopicMenos(this, 'sons')">
+          <div class="topic-icon">🎵</div>
+          <div class="topic-info">
+            <div class="topic-name">Sons Terapêuticos</div>
+            <div class="topic-desc">Chuva, oceano, binaurais, Solfeggio</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="toggleTopicMenos(this, 'respirar')">
+          <div class="topic-icon">🫁</div>
+          <div class="topic-info">
+            <div class="topic-name">Respirar</div>
+            <div class="topic-desc">Coerência cardíaca, Box Breathing</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="toggleTopicMenos(this, 'jogar')">
+          <div class="topic-icon">🎮</div>
+          <div class="topic-info">
+            <div class="topic-name">Brincar</div>
+            <div class="topic-desc">Mandalas, constelações, Deixar Ir</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="toggleTopicMenos(this, 'criar')">
+          <div class="topic-icon">✨</div>
+          <div class="topic-info">
+            <div class="topic-name">Fazer / Criar</div>
+            <div class="topic-desc">Handpan, kalimba, mandala de luz, areia</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="toggleTopicMenos(this, 'meditar')">
+          <div class="topic-icon">🧘</div>
+          <div class="topic-info">
+            <div class="topic-name">Meditar</div>
+            <div class="topic-desc">Timer de meditação com sino tibetano</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="toggleTopicMenos(this, 'dormir')">
+          <div class="topic-icon">🌙</div>
+          <div class="topic-info">
+            <div class="topic-name">Dormir Melhor</div>
+            <div class="topic-desc">4-7-8, ondas delta/theta, higiene do sono</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="toggleTopicMenos(this, 'gratidao')">
+          <div class="topic-icon">🙏</div>
+          <div class="topic-info">
+            <div class="topic-name">Gratidão</div>
+            <div class="topic-desc">Diário de gratidão</div>
+          </div>
+          <div class="check"></div>
+        </div>
+        <div class="topic-card" onclick="toggleTopicMenos(this, 'desconectar')">
+          <div class="topic-icon">📵</div>
+          <div class="topic-info">
+            <div class="topic-name">Desconectar</div>
+            <div class="topic-desc">Ferramentas contra vício em telas</div>
+          </div>
+          <div class="check"></div>
+        </div>
+      </div>
+      <input type="hidden" name="topicos_menos_ajudaram" id="topicosMenosAjudaram">
+    </div>
+
+    <button type="button" class="submit-btn" onclick="submitForm(event)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+      Enviar Feedback
+    </button>
+
+  </form>
+  </div>
+
+  <!-- Success Message -->
+  <div class="success-message" id="successMessage">
+    <div class="success-icon">✨</div>
+    <h2>Obrigado!</h2>
+    <p>Seu feedback foi recebido com carinho. Cada resposta ajuda a gente a fazer o ÉTER melhor pra quem precisa.<br><br>Se quiser, pode voltar ao <a href="index.html" style="color:var(--accent-teal);text-decoration:none;">site principal</a>.</p>
+  </div>
+
+  <!-- ===== ADMIN PANEL ===== -->
+  
+
+    <!-- Tabs -->
+    
+    </div>
+
+</div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-logo">ÉTER</div>
+    <div class="footer-text">Site de bem-estar mental para o dia a dia · 2026</div>
+  </div>
+</div>
+<script>
+// ===== GLOBAL LABELS =====
+const topicLabels = {
+  sons: 'Sons Terapêuticos', respirar: 'Respirar', jogar: 'Brincar', criar: 'Fazer/Criar',
+  meditar: 'Meditar', dormir: 'Dormir Melhor', gratidao: 'Gratidão', desconectar: 'Desconectar',
+  refletir: 'Reflexões', checkin: 'Como você se sente?'
+};
+
+const gameLabels = {
+  mandala: 'Mandala Zen', constelacoes: 'Constelações', deixar_ir: 'Deixar Ir',
+  handpan: 'Handpan Virtual', mandala_luz: 'Mandala de Luz', areia: 'Fluxo de Areia',
+  tetris: 'Tetris Zen', kalimba: 'Kalimba Virtual', terapia_cores: 'Terapia das Cores',
+  coerencia_cardiaca: 'Coerência Cardíaca', box_breathing: 'Box Breathing', respiracao_478: 'Respiração 4-7-8',
+  ondas_binaurais: 'Ondas Binaurais', chuva: 'Chuva Suave', oceano: 'Ondas do Oceano',
+  floresta: 'Floresta', som_meditacao: 'Som de Meditação', ruido_branco: 'Ruído Branco',
+  solfeggio: '852 Hz Solfeggio', ondas_delta: 'Ondas Delta/Theta',
+  timer_meditacao: 'Timer de Meditação', diario_gratidao: 'Diário de Gratidão'
+};
+
+const moodLabels = {
+  mais_calm: 'Mais calmo', mais_foc: 'Mais focado', mais_energ: 'Mais energizado',
+  mais_trist: 'Mais triste', sem_mudanc: 'Sem mudança', outro: 'Outro'
+};
+
+// ===== STAR RATING =====
+function setRating(category, value) {
+  const stars = document.querySelectorAll(`.stars[data-rating="${category}"] .star`);
+  stars.forEach((star, i) => {
+    if (i < value) star.classList.add('active');
+    else star.classList.remove('active');
+  });
+  document.getElementById('rating' + category.charAt(0).toUpperCase() + category.slice(1)).value = value;
+}
+
+// ===== TOPIC SELECTION =====
+function selectTopic(el, value) {
+  document.querySelectorAll('#topicGrid .topic-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('topicoMaisAjudou').value = value;
+}
+
+// ===== MOOD SELECTION =====
+function selectMood(el, value) {
+  document.querySelectorAll('#moodGrid .mood-option').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('estadoEmocional').value = value;
+}
+
+// ===== MINIJOGOS MENOS AJUDOU =====
+function selectMinijogoMenos(el, value) {
+  document.querySelectorAll('#minijogoMenosGrid .topic-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('minijogoMenosAjudou').value = value;
+}
+
+// ===== TÓPICOS MENOS AJUDARAM =====
+function toggleTopicMenos(el, value) {
+  el.classList.toggle('selected');
+  const selected = [];
+  document.querySelectorAll('#topicMenosGrid .topic-card.selected').forEach(c => {
+    const onclick = c.getAttribute('onclick');
+    const match = onclick.match(/toggleTopicMenos\(this,\s*['"]([^'"]+)['"]\)/);
+    if (match) selected.push(match[1]);
+  });
+  document.getElementById('topicosMenosAjudaram').value = JSON.stringify(selected);
+}
+
+// ===== DRAG & DROP RANKING =====
+const rankingList = document.getElementById('rankingList');
+let draggedItem = null;
+
+rankingList.addEventListener('dragstart', (e) => {
+  draggedItem = e.target.closest('.ranking-item');
+  if (draggedItem) {
+    draggedItem.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  }
+});
+
+rankingList.addEventListener('dragend', (e) => {
+  if (draggedItem) {
+    draggedItem.classList.remove('dragging');
+    draggedItem = null;
+    updateRankNumbers();
+    saveRanking();
+  }
+});
+
+rankingList.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  const afterElement = getDragAfterElement(rankingList, e.clientY);
+  if (draggedItem) {
+    if (afterElement == null) {
+      rankingList.appendChild(draggedItem);
+    } else {
+      rankingList.insertBefore(draggedItem, afterElement);
+    }
+  }
+});
+
+let touchDragItem = null;
+rankingList.addEventListener('touchstart', (e) => {
+  touchDragItem = e.target.closest('.ranking-item');
+  if (touchDragItem) {
+    touchDragItem.classList.add('dragging');
+  }
+}, { passive: true });
+
+rankingList.addEventListener('touchmove', (e) => {
+  e.preventDefault();
+  if (!touchDragItem) return;
+  const touch = e.touches[0];
+  const afterElement = getDragAfterElement(rankingList, touch.clientY);
+  if (afterElement == null) {
+    rankingList.appendChild(touchDragItem);
+  } else {
+    rankingList.insertBefore(touchDragItem, afterElement);
+  }
+}, { passive: false });
+
+rankingList.addEventListener('touchend', () => {
+  if (touchDragItem) {
+    touchDragItem.classList.remove('dragging');
+    touchDragItem = null;
+    updateRankNumbers();
+    saveRanking();
+  }
+});
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll('.ranking-item:not(.dragging)')];
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child };
+    } else {
+      return closest;
+    }
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
+
+function updateRankNumbers() {
+  const items = rankingList.querySelectorAll('.ranking-item');
+  items.forEach((item, i) => {
+    const num = item.querySelector('.rank-num');
+    num.textContent = i + 1;
+    num.classList.toggle('top', i < 3);
+  });
+}
+
+function saveRanking() {
+  const items = rankingList.querySelectorAll('.ranking-item');
+  const order = [];
+  items.forEach(item => {
+    order.push(item.dataset.game);
+  });
+  document.getElementById('rankingMinijogos').value = JSON.stringify(order);
+}
+
+saveRanking();
+
+// ===== FORM SUBMIT =====
+function submitForm(e) {
+  e.preventDefault();
+
+  if (localStorage.getItem('eter_feedback_enviado') === '1') {
+    alert('Você já enviou seu feedback. Obrigado!');
+    return;
+  }
+
+  const formData = {
+topico_mais_ajudou: document.getElementById('topicoMaisAjudou').value,
+    ranking_minijogos: document.getElementById('rankingMinijogos').value,
+    ratings: {
+      design: document.getElementById('ratingDesign').value,
+      usabilidade: document.getElementById('ratingUsabilidade').value,
+      audio: document.getElementById('ratingAudio').value,
+      efetividade: document.getElementById('ratingEfetividade').value,
+      performance: document.getElementById('ratingPerformance').value
+    },
+    estado_emocional: document.getElementById('estadoEmocional').value,
+    sugestoes: document.querySelector('textarea[name="sugestoes"]').value,
+    nps: document.getElementById('npsSlider').value,
+    minijogo_menos_ajudou: document.getElementById('minijogoMenosAjudou').value,
+    topicos_menos_ajudaram: document.getElementById('topicosMenosAjudaram').value,
+    timestamp: new Date().toISOString()
+  };
+
+  let feedbacks = JSON.parse(localStorage.getItem('eter_feedbacks') || '[]');
+  feedbacks.push(formData);
+  localStorage.setItem('eter_feedbacks', JSON.stringify(feedbacks));
+  localStorage.setItem('eter_feedback_enviado', '1');
+
+  document.getElementById('feedbackForm').style.display = 'none';
+  document.getElementById('successMessage').classList.add('show');
+
+  console.log('=== NOVO FEEDBACK ETER ===');
+  console.log(JSON.stringify(formData, null, 2));
+  console.log('Total de feedbacks:', feedbacks.length);
+}
+
+// ===== ADMIN PANEL =====
+const ADMIN_PASSWORD = 'eter2026';
+
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+}
+
+function showAdminPanel() {
+  document.getElementById('loginOverlay').classList.add('show');
+  document.getElementById('adminPass').value = '';
+  document.getElementById('loginError').style.display = 'none';
+  setTimeout(() => document.getElementById('adminPass').focus(), 100);
+}
+
+function doLogin() {
+  const pass = document.getElementById('adminPass').value;
+  if (pass === ADMIN_PASSWORD) {
+    document.getElementById('loginOverlay').classList.remove('show');
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('successMessage').style.display = 'none';
+    document.querySelector('.header').style.display = 'none';
+    document.querySelector('.contact-box').style.display = 'none';
+    document.getElementById('adminPanel').classList.add('show');
+    renderAdminData();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function showForm() {
+  document.getElementById('adminPanel').classList.remove('show');
+  document.getElementById('formView').style.display = 'block';
+  document.querySelector('.header').style.display = 'block';
+  document.querySelector('.contact-box').style.display = 'block';
+}
+
+function renderAdminData() {
+  const feedbacks = JSON.parse(localStorage.getItem('eter_feedbacks') || '[]');
+
+  document.getElementById('statTotal').textContent = feedbacks.length;
+
+  if (feedbacks.length === 0) {
+    document.getElementById('feedbackList').innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:2rem;">Nenhum feedback ainda.</p>';
+    return;
+  }
+
+  const npsAvg = (feedbacks.reduce((a, b) => a + parseInt(b.nps || 0), 0) / feedbacks.length).toFixed(1);
+  const designAvg = (feedbacks.reduce((a, b) => a + parseInt(b.ratings?.design || 0), 0) / feedbacks.length).toFixed(1);
+  const efetAvg = (feedbacks.reduce((a, b) => a + parseInt(b.ratings?.efetividade || 0), 0) / feedbacks.length).toFixed(1);
+
+  document.getElementById('statNPS').textContent = npsAvg;
+  document.getElementById('statDesign').textContent = designAvg;
+  document.getElementById('statEfet').textContent = efetAvg;
+
+  const topicCounts = {};
+  feedbacks.forEach(f => {
+    if (f.topico_mais_ajudou) topicCounts[f.topico_mais_ajudou] = (topicCounts[f.topico_mais_ajudou] || 0) + 1;
+  });
+  const topTopic = Object.entries(topicCounts).sort((a, b) => b[1] - a[1])[0];
+  document.getElementById('statTopico').textContent = topTopic ? (topicLabels[topTopic[0]] || topTopic[0]) : '—';
+
+  const minijogoMenosCounts = {};
+  feedbacks.forEach(f => {
+    if (f.minijogo_menos_ajudou) minijogoMenosCounts[f.minijogo_menos_ajudou] = (minijogoMenosCounts[f.minijogo_menos_ajudou] || 0) + 1;
+  });
+  const worstMinijogo = Object.entries(minijogoMenosCounts).sort((a, b) => b[1] - a[1])[0];
+  document.getElementById('statMinijogoMenos').textContent = worstMinijogo ? (gameLabels[worstMinijogo[0]] || worstMinijogo[0]) : '—';
+
+  const topicMenosCounts = {};
+  feedbacks.forEach(f => {
+    try {
+      const menos = JSON.parse(f.topicos_menos_ajudaram || '[]');
+      menos.forEach(t => { topicMenosCounts[t] = (topicMenosCounts[t] || 0) + 1; });
+    } catch(e) {}
+  });
+  const worstTopic = Object.entries(topicMenosCounts).sort((a, b) => b[1] - a[1])[0];
+  document.getElementById('statTopicoMenos').textContent = worstTopic ? (topicLabels[worstTopic[0]] || worstTopic[0]) : '—';
+
+  renderRankings(feedbacks);
+  renderAvaliacoes(feedbacks);
+  renderUso(feedbacks);
+  renderNPS(feedbacks);
+  renderSugestoes(feedbacks);
+  renderTabela(feedbacks);
+}
+
+function renderRankings(feedbacks) {
+  const gameScores = {};
+  const gameCount = {};
+  feedbacks.forEach(f => {
+    try {
+      const ranking = JSON.parse(f.ranking_minijogos || '[]');
+      ranking.forEach((game, idx) => {
+        if (!gameScores[game]) { gameScores[game] = 0; gameCount[game] = 0; }
+        gameScores[game] += (idx + 1);
+        gameCount[game]++;
+      });
+    } catch(e) {}
+  });
+
+  const gameAvgRank = Object.keys(gameScores).map(game => ({
+    game, avg: gameCount[game] > 0 ? (gameScores[game] / gameCount[game]).toFixed(1) : 99, count: gameCount[game]
+  })).sort((a, b) => a.avg - b.avg);
+
+  let html = '';
+  gameAvgRank.forEach((g, i) => {
+    const posClass = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : 'normal';
+    html += `<div class="rank-display"><div class="rank-pos ${posClass}">${i+1}</div><div class="rank-name">${gameLabels[g.game] || g.game}</div><div class="rank-score">${g.avg}º</div></div>`;
+  });
+  document.getElementById('rankingChart').innerHTML = html || '<p style="color:var(--text-muted);text-align:center;padding:1rem;">Sem dados</p>';
+
+  const topicCounts = {};
+  feedbacks.forEach(f => { if (f.topico_mais_ajudou) topicCounts[f.topico_mais_ajudou] = (topicCounts[f.topico_mais_ajudou] || 0) + 1; });
+  let topicHtml = '<div class="bar-chart">';
+  Object.entries(topicCounts).sort((a, b) => b[1] - a[1]).forEach(([topic, count]) => {
+    topicHtml += `<div class="bar-row"><div class="bar-label">${topicLabels[topic] || topic}</div><div class="bar-track"><div class="bar-fill teal" style="width:100%"><span class="bar-count">${count}</span></div></div></div>`;
+  });
+  topicHtml += '</div>';
+  document.getElementById('topicoMaisChart').innerHTML = topicHtml;
+
+  const minijogoMenosCounts = {};
+  feedbacks.forEach(f => { if (f.minijogo_menos_ajudou) minijogoMenosCounts[f.minijogo_menos_ajudou] = (minijogoMenosCounts[f.minijogo_menos_ajudou] || 0) + 1; });
+  let menosHtml = '<div class="bar-chart">';
+  Object.entries(minijogoMenosCounts).sort((a, b) => b[1] - a[1]).forEach(([game, count]) => {
+    menosHtml += `<div class="bar-row"><div class="bar-label">${gameLabels[game] || game}</div><div class="bar-track"><div class="bar-fill rose" style="width:100%"><span class="bar-count">${count}</span></div></div></div>`;
+  });
+  menosHtml += '</div>';
+  document.getElementById('minijogoMenosChart').innerHTML = menosHtml;
+
+  const topicMenosCounts = {};
+  feedbacks.forEach(f => {
+    try { JSON.parse(f.topicos_menos_ajudaram || '[]').forEach(t => { topicMenosCounts[t] = (topicMenosCounts[t] || 0) + 1; }); } catch(e) {}
+  });
+  let topicosMenosHtml = '<div class="bar-chart">';
+  Object.entries(topicMenosCounts).sort((a, b) => b[1] - a[1]).forEach(([topic, count]) => {
+    topicosMenosHtml += `<div class="bar-row"><div class="bar-label">${topicLabels[topic] || topic}</div><div class="bar-track"><div class="bar-fill rose" style="width:100%"><span class="bar-count">${count}</span></div></div></div>`;
+  });
+  topicosMenosHtml += '</div>';
+  document.getElementById('topicosMenosChart').innerHTML = topicosMenosHtml;
+}
+
+function renderAvaliacoes(feedbacks) {
+  const designAvg = (feedbacks.reduce((a, b) => a + parseInt(b.ratings?.design || 0), 0) / feedbacks.length).toFixed(1);
+  const usabAvg = (feedbacks.reduce((a, b) => a + parseInt(b.ratings?.usabilidade || 0), 0) / feedbacks.length).toFixed(1);
+  const audioAvg = (feedbacks.reduce((a, b) => a + parseInt(b.ratings?.audio || 0), 0) / feedbacks.length).toFixed(1);
+  const efetAvg = (feedbacks.reduce((a, b) => a + parseInt(b.ratings?.efetividade || 0), 0) / feedbacks.length).toFixed(1);
+  const perfAvg = (feedbacks.reduce((a, b) => a + parseInt(b.ratings?.performance || 0), 0) / feedbacks.length).toFixed(1);
+
+  let html = '';
+  const cats = [['Design Visual', designAvg], ['Usabilidade', usabAvg], ['Áudio', audioAvg], ['Efetividade', efetAvg], ['Performance', perfAvg]];
+  cats.forEach(([label, avg]) => {
+    const filled = Math.round(avg);
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+      const fill = i <= filled ? 'var(--accent-amber)' : 'rgba(255,255,255,0.1)';
+      stars += `<svg viewBox="0 0 24 24" fill="${fill}" style="width:18px;height:18px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+    }
+    html += `<div class="star-display"><div class="star-label">${label}</div><div class="stars-bar">${stars}</div><div class="star-avg">${avg}</div></div>`;
+  });
+  document.getElementById('ratingsChart').innerHTML = html;
+
+  [['design', 'designDistChart'], ['efetividade', 'efetDistChart']].forEach(([key, id]) => {
+    const dist = {1:0, 2:0, 3:0, 4:0, 5:0};
+    feedbacks.forEach(f => { const v = parseInt(f.ratings?.[key]); if (v >= 1 && v <= 5) dist[v]++; });
+    const total = Object.values(dist).reduce((a,b)=>a+b,0);
+    let chartHtml = '<div class="bar-chart">';
+    [5,4,3,2,1].forEach(star => {
+      const count = dist[star];
+      const pct = total > 0 ? (count / total * 100).toFixed(0) : 0;
+      const barClass = star >= 4 ? 'gold' : star === 3 ? 'amber' : 'rose';
+      chartHtml += `<div class="bar-row"><div class="bar-label">${star}★</div><div class="bar-track"><div class="bar-fill ${barClass}" style="width:${Math.max(pct,5)}%"><span class="bar-count">${count}</span></div></div></div>`;
+    });
+    chartHtml += '</div>';
+    document.getElementById(id).innerHTML = chartHtml;
+  });
+
+  let majorityHtml = '<div class="bar-chart">';
+  const catDefs = [['design', 'Design'], ['usabilidade', 'Usabilidade'], ['audio', 'Áudio'], ['efetividade', 'Efetividade'], ['performance', 'Performance']];
+  catDefs.forEach(([key, label]) => {
+    const dist = {1:0, 2:0, 3:0, 4:0, 5:0};
+    feedbacks.forEach(f => { const v = parseInt(f.ratings?.[key]); if (v >= 1 && v <= 5) dist[v]++; });
+    const maxCount = Math.max(...Object.values(dist));
+    const majorityRating = Object.keys(dist).find(k => dist[k] === maxCount);
+    const barClass = majorityRating >= 4 ? 'gold' : majorityRating == 3 ? 'amber' : 'rose';
+    majorityHtml += `<div class="bar-row"><div class="bar-label">${label}</div><div class="bar-track"><div class="bar-fill ${barClass}" style="width:80%"><span class="bar-count">${majorityRating}★</span></div></div></div>`;
+  });
+  majorityHtml += '</div>';
+  document.getElementById('majorityChart').innerHTML = majorityHtml;
+}
+
+function renderUso(feedbacks) {
+  const usoDist = {};
+  feedbacks.forEach(f => { const v = f.usage_count; if (v) usoDist[v] = (usoDist[v] || 0) + 1; });
+  let usoHtml = '<div class="bar-chart">';
+  Object.entries(usoDist).sort((a,b)=>parseInt(a[0])-parseInt(b[0])).forEach(([uso, count]) => {
+    usoHtml += `<div class="bar-row"><div class="bar-label">${uso}x</div><div class="bar-track"><div class="bar-fill teal" style="width:80%"><span class="bar-count">${count}</span></div></div></div>`;
+  });
+  usoHtml += '</div>';
+  document.getElementById('usoChart').innerHTML = usoHtml;
+
+  const tempoDist = {};
+  feedbacks.forEach(f => { const v = f.usage_time; if (v) tempoDist[v] = (tempoDist[v] || 0) + 1; });
+  let tempoHtml = '<div class="bar-chart">';
+  Object.entries(tempoDist).sort((a,b)=>parseInt(a[0])-parseInt(b[0])).forEach(([tempo, count]) => {
+    tempoHtml += `<div class="bar-row"><div class="bar-label">${tempo}min</div><div class="bar-track"><div class="bar-fill lavender" style="width:80%"><span class="bar-count">${count}</span></div></div></div>`;
+  });
+  tempoHtml += '</div>';
+  document.getElementById('tempoChart').innerHTML = tempoHtml;
+
+  const usoValues = feedbacks.map(f => parseInt(f.usage_count || 0)).filter(v => v > 0);
+  const tempoValues = feedbacks.map(f => parseInt(f.usage_time || 0)).filter(v => v > 0);
+  const usoMedio = usoValues.length > 0 ? (usoValues.reduce((a,b)=>a+b,0) / usoValues.length).toFixed(1) : 0;
+  const tempoMedio = tempoValues.length > 0 ? (tempoValues.reduce((a,b)=>a+b,0) / tempoValues.length).toFixed(0) : 0;
+
+  let resumoHtml = '';
+  resumoHtml += `<div class="usage-stat"><span class="usage-label">Média de usos</span><span class="usage-value">${usoMedio}x</span></div>`;
+  resumoHtml += `<div class="usage-stat"><span class="usage-label">Média de tempo</span><span class="usage-value">${tempoMedio} min</span></div>`;
+  document.getElementById('usoResumo').innerHTML = resumoHtml;
+}
+
+function renderNPS(feedbacks) {
+  const npsValues = feedbacks.map(f => parseInt(f.nps || 0)).filter(v => v >= 0);
+  let detratores = 0, passivos = 0, promotores = 0;
+  npsValues.forEach(v => { if (v <= 6) detratores++; else if (v <= 8) passivos++; else promotores++; });
+  const npsScore = npsValues.length > 0 ? ((promotores - detratores) / npsValues.length * 100).toFixed(0) : 0;
+
+  let npsHtml = `<div class="nps-gauge"><div class="nps-circle detratores"><div class="nps-num">${detratores}</div><div class="nps-label">Detratores</div></div><div style="text-align:center;"><div style="font-size:2.5rem;font-weight:700;color:var(--accent-teal);font-family:'Cormorant Garamond',serif;">${npsScore}</div><div style="font-size:0.75rem;color:var(--text-muted);">NPS Score</div></div><div class="nps-circle passivos"><div class="nps-num">${passivos}</div><div class="nps-label">Passivos</div></div><div class="nps-circle promotores"><div class="nps-num">${promotores}</div><div class="nps-label">Promotores</div></div></div>`;
+  document.getElementById('npsChart').innerHTML = npsHtml;
+
+  const npsDist = {};
+  for (let i = 0; i <= 10; i++) npsDist[i] = 0;
+  npsValues.forEach(v => npsDist[v]++);
+  let npsDistHtml = '<div class="bar-chart">';
+  for (let i = 10; i >= 0; i--) {
+    const count = npsDist[i];
+    const pct = npsValues.length > 0 ? (count / npsValues.length * 100).toFixed(0) : 0;
+    const barClass = i >= 9 ? 'promotores' : i >= 7 ? 'passivos' : 'detratores';
+    npsDistHtml += `<div class="bar-row"><div class="bar-label">Nota ${i}</div><div class="bar-track"><div class="bar-fill ${barClass}" style="width:${Math.max(pct,5)}%"><span class="bar-count">${count}</span></div></div></div>`;
+  }
+  npsDistHtml += '</div>';
+  document.getElementById('npsDistChart').innerHTML = npsDistHtml;
+
+  const moodCounts = {};
+  feedbacks.forEach(f => { if (f.estado_emocional) moodCounts[f.estado_emocional] = (moodCounts[f.estado_emocional] || 0) + 1; });
+  let moodHtml = '<div class="mood-grid-stats">';
+  const emojiMap = { mais_calm: '😌', mais_foc: '🎯', mais_energ: '⚡', mais_trist: '😔', sem_mudanc: '😐', outro: '💬' };
+  Object.entries(moodCounts).sort((a,b) => b[1] - a[1]).forEach(([mood, count]) => {
+    moodHtml += `<div class="mood-stat"><div class="mood-emoji">${emojiMap[mood] || '💭'}</div><div class="mood-count">${count}</div><div class="mood-name">${moodLabels[mood] || mood}</div></div>`;
+  });
+  moodHtml += '</div>';
+  document.getElementById('moodChart').innerHTML = moodHtml;
+}
+
+function renderSugestoes(feedbacks) {
+  const sugestoes = feedbacks.filter(f => f.sugestoes && f.sugestoes.trim().length > 0);
+  let sugHtml = '';
+  if (sugestoes.length === 0) {
+    sugHtml = '<div class="suggestion-item sug-empty">Nenhuma sugestão ainda</div>';
+  } else {
+    sugestoes.slice().reverse().forEach(f => {
+      const date = new Date(f.timestamp).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+      sugHtml += `<div class="suggestion-item">${f.sugestoes.replace(/\n/g, '<br>')}<div class="sug-date">${date}</div></div>`;
+    });
+  }
+  document.getElementById('suggestionsList').innerHTML = sugHtml;
+  const sugTitle = document.querySelector('#tab-sugestoes h4');
+  if (sugTitle) sugTitle.innerHTML = `<span class="icon">💡</span> Todas as Sugestões (${sugestoes.length})`;
+}
+
+function renderTabela(feedbacks) {
+  let html = '<table class="feedback-table"><thead><tr><th>#</th><th>Data</th><th>NPS</th><th>Design</th><th>Usab</th><th>Audio</th><th>Efet</th><th>Perf</th><th>Tópico</th><th>Humor</th><th>Sugestão</th></tr></thead><tbody>';
+
+  feedbacks.slice().reverse().forEach((f, idx) => {
+    const date = new Date(f.timestamp).toLocaleString('pt-BR');
+    const sug = f.sugestoes ? (f.sugestoes.substring(0, 30) + (f.sugestoes.length > 30 ? '...' : '')) : '—';
+    html += `<tr onclick="showDetail(${feedbacks.length - 1 - idx})">`;
+    html += `<td>${feedbacks.length - idx}</td>`;
+    html += `<td>${date}</td>`;
+    html += `<td class="cell-nps">${f.nps || '—'}</td>`;
+    html += `<td class="cell-rating">${f.ratings?.design || '—'}</td>`;
+    html += `<td class="cell-rating">${f.ratings?.usabilidade || '—'}</td>`;
+    html += `<td class="cell-rating">${f.ratings?.audio || '—'}</td>`;
+    html += `<td class="cell-rating">${f.ratings?.efetividade || '—'}</td>`;
+    html += `<td class="cell-rating">${f.ratings?.performance || '—'}</td>`;
+    html += `<td>${topicLabels[f.topico_mais_ajudou] || f.topico_mais_ajudou || '—'}</td>`;
+    html += `<td>${moodLabels[f.estado_emocional] || f.estado_emocional || '—'}</td>`;
+    html += `<td title="${f.sugestoes || ''}">${sug}</td>`;
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  document.getElementById('feedbackList').innerHTML = html;
+}
+
+function showDetail(index) {
+  const feedbacks = JSON.parse(localStorage.getItem('eter_feedbacks') || '[]');
+  if (index < 0 || index >= feedbacks.length) return;
+  const f = feedbacks[index];
+
+  let html = '<div class="feedback-detail show">';
+  html += '<div class="detail-header"><span><strong>Feedback #' + (index + 1) + '</strong></span>';
+  html += '<span class="detail-date">' + new Date(f.timestamp).toLocaleString('pt-BR') + '</span></div>';
+  html += '<div class="detail-grid">';
+  html += '<div class="detail-item"><div class="detail-label">Uso</div><div class="detail-value">' + (f.usage_count || '—') + 'x · ' + (f.usage_time || '—') + ' min</div></div>';
+  html += '<div class="detail-item"><div class="detail-label">NPS</div><div class="detail-value">' + (f.nps || '—') + '/10</div></div>';
+  html += '<div class="detail-item"><div class="detail-label">Design</div><div class="detail-value">' + (f.ratings?.design || '—') + '/5</div></div>';
+  html += '<div class="detail-item"><div class="detail-label">Usabilidade</div><div class="detail-value">' + (f.ratings?.usabilidade || '—') + '/5</div></div>';
+  html += '<div class="detail-item"><div class="detail-label">Áudio</div><div class="detail-value">' + (f.ratings?.audio || '—') + '/5</div></div>';
+  html += '<div class="detail-item"><div class="detail-label">Efetividade</div><div class="detail-value">' + (f.ratings?.efetividade || '—') + '/5</div></div>';
+  html += '<div class="detail-item"><div class="detail-label">Performance</div><div class="detail-value">' + (f.ratings?.performance || '—') + '/5</div></div>';
+  html += '<div class="detail-item"><div class="detail-label">Tópico</div><div class="detail-value">' + (topicLabels[f.topico_mais_ajudou] || f.topico_mais_ajudou || '—') + '</div></div>';
+  html += '<div class="detail-item"><div class="detail-label">Humor</div><div class="detail-value">' + (moodLabels[f.estado_emocional] || f.estado_emocional || '—') + '</div></div>';
+  html += '</div>';
+  if (f.sugestoes) {
+    html += '<div class="detail-sugestao"><div class="detail-label" style="margin-bottom:0.5rem;">Sugestão</div>' + f.sugestoes.replace(/\n/g, '<br>') + '</div>';
+  }
+  html += '<div style="text-align:right;margin-top:1rem;"><button class="admin-btn" onclick="this.parentElement.parentElement.remove();">Fechar</button></div>';
+  html += '</div>';
+
+  const existing = document.querySelector('.feedback-detail.show');
+  if (existing) existing.remove();
+  document.getElementById('feedbackList').insertAdjacentHTML('afterbegin', html);
+}
+
+function exportFeedbacks() {
+  const feedbacks = JSON.parse(localStorage.getItem('eter_feedbacks') || '[]');
+  const dataStr = JSON.stringify(feedbacks, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'eter-feedbacks-' + new Date().toISOString().split('T')[0] + '.json';
+  link.click();
+}
+
+function exportCSV() {
+  const feedbacks = JSON.parse(localStorage.getItem('eter_feedbacks') || '[]');
+  if (feedbacks.length === 0) return;
+  const headers = ['Data', 'Uso', 'Tempo', 'Topico', 'NPS', 'Design', 'Usabilidade', 'Audio', 'Efetividade', 'Performance', 'Humor', 'MinijogoMenos', 'TopicosMenos', 'Sugestao', 'Ranking'];
+  let csv = headers.join(',') + '\n';
+  feedbacks.forEach(f => {
+    const row = [
+      f.timestamp, f.usage_count, f.usage_time, f.topico_mais_ajudou, f.nps,
+      f.ratings?.design, f.ratings?.usabilidade, f.ratings?.audio, f.ratings?.efetividade, f.ratings?.performance,
+      f.estado_emocional, f.minijogo_menos_ajudou, f.topicos_menos_ajudaram,
+      '"' + (f.sugestoes || '').replace(/"/g, '""') + '"', f.ranking_minijogos
+    ];
+    csv += row.join(',') + '\n';
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'eter-feedbacks-' + new Date().toISOString().split('T')[0] + '.csv';
+  link.click();
+}
+
+function clearAllData() {
+  if (confirm('Tem certeza que quer apagar TODOS os feedbacks? Isso não pode ser desfeito.')) {
+    localStorage.removeItem('eter_feedbacks');
+    renderAdminData();
+    const existing = document.querySelector('.feedback-detail.show');
+    if (existing) existing.remove();
+  }
+}
+
+// ===== CHECK IF ALREADY SUBMITTED =====
+if (window.location.search.includes('reset=1')) {
+  localStorage.removeItem('eter_feedback_enviado');
+  history.replaceState({}, '', window.location.pathname);
+}
+if (localStorage.getItem('eter_feedback_enviado') === '1') {
+  document.getElementById('feedbackForm').style.display = 'none';
+  document.getElementById('successMessage').classList.add('show');
+}
+
+// ===== ADMIN ACCESS METHODS =====
+window.openAdminPanel = showAdminPanel;
+
+// 1. Ctrl+Shift+A
+window.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a' || e.code === 'KeyA')) {
+    e.preventDefault();
+    e.stopPropagation();
+    showAdminPanel();
+    return false;
+  }
+  if (e.altKey && (e.key === 'A' || e.key === 'a' || e.code === 'KeyA')) {
+    e.preventDefault();
+    e.stopPropagation();
+    showAdminPanel();
+    return false;
+  }
+  if (e.shiftKey && !e.ctrlKey && !e.altKey && (e.key === 'A' || e.key === 'a' || e.code === 'KeyA')) {
+    e.preventDefault();
+    e.stopPropagation();
+    showAdminPanel();
+    return false;
+  }
+}, true);
+
+// 2. Double-tap Shift
+let lastShiftTime = 0;
+window.addEventListener('keydown', function(e) {
+  if (e.key === 'Shift') {
+    const now = Date.now();
+    if (lastShiftTime && (now - lastShiftTime) < 400) {
+      showAdminPanel();
+      lastShiftTime = 0;
+    } else {
+      lastShiftTime = now;
+    }
+  }
+});
+
+// 3. Type "eteradmin"
+let adminBuffer = '';
+document.addEventListener('keypress', function(e) {
+  adminBuffer += e.key.toLowerCase();
+  if (adminBuffer.length > 20) adminBuffer = adminBuffer.slice(-20);
+  if (adminBuffer.includes('eteradmin')) {
+    adminBuffer = '';
+    showAdminPanel();
+  }
+});
+
+// 4. URL parameter
+if (window.location.search.includes('admin=1') || window.location.hash === '#admin') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showAdminPanel);
+  } else {
+    showAdminPanel();
+  }
+}
+
+console.log('=== ETER FEEDBACK ===');
+console.log('Admin: Ctrl+Shift+A, Alt+A, Shift+A, duplo-Shift, digite eteradmin, botão no footer, ?admin=1, openAdminPanel()');
+console.log('Senha: eter2026');
+</script>
+
+
+
+<!-- Admin Panel -->
+<div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+      <h2>📊 Painel de Dados — ÉTER Feedback</h2>
+      <div class="admin-actions">
+        <button class="admin-btn" onclick="exportFeedbacks()">📥 Exportar JSON</button>
+        <button class="admin-btn" onclick="exportCSV()">📄 Exportar CSV</button>
+        <button class="admin-btn danger" onclick="clearAllData()">🗑️ Limpar Tudo</button>
+        <button class="admin-btn" onclick="showForm()">📝 Voltar ao Form</button>
+      </div>
+    </div>
+
+    <div class="admin-stats" id="adminStats">
+      <div class="stat-card">
+        <div class="stat-value" id="statTotal">0</div>
+        <div class="stat-label">Total de Respostas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statNPS">0</div>
+        <div class="stat-label">NPS Médio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statDesign">0</div>
+        <div class="stat-label">Design Médio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statEfet">0</div>
+        <div class="stat-label">Efetividade Média</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statTopico">—</div>
+        <div class="stat-label">Tópico Mais Votado</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statMinijogoMenos">—</div>
+        <div class="stat-label">Minijogo Menos Votado</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statTopicoMenos">—</div>
+        <div class="stat-label">Tópico Menos Votado</div>
+      </div>
+    </div>
+    
+
+<div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchTab('tab-rankings')" data-tab="tab-rankings">🏆 Rankings</button>
+      <button class="admin-tab" onclick="switchTab('tab-avaliacoes')" data-tab="tab-avaliacoes">⭐ Avaliações</button>
+      <button class="admin-tab" onclick="switchTab('tab-uso')" data-tab="tab-uso">📊 Uso & Tempo</button>
+      <button class="admin-tab" onclick="switchTab('tab-nps')" data-tab="tab-nps">📢 NPS & Humor</button>
+      
+      <button class="admin-tab" onclick="switchTab('tab-sugestoes')" data-tab="tab-sugestoes">💡 Sugestões</button>
+      <button class="admin-tab" onclick="switchTab('tab-tabela')" data-tab="tab-tabela">📋 Tabela Completa</button>
+      <button class="admin-tab" onclick="switchTab('tab-todos')" data-tab="tab-todos">📋 Todos os Dados</button>
+    </div>      
+
+
+    <!-- TAB: Rankings -->
+    <div class="tab-content active" id="tab-rankings">
+      <div class="stats-dashboard">
+        <div class="stat-section">
+          <h4><span class="icon">🏆</span> Ranking dos Minijogos (Mais Útil → Menos Útil)</h4>
+          <div id="rankingChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">🎯</span> Tópico que MAIS Ajudou</h4>
+          <div id="topicoMaisChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">🎮</span> Minijogo que MENOS Ajudou</h4>
+          <div id="minijogoMenosChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">📉</span> Tópicos que MENOS Ajudaram</h4>
+          <div id="topicosMenosChart"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Avaliações -->
+    <div class="tab-content" id="tab-avaliacoes">
+      <div class="stats-dashboard">
+        <div class="stat-section">
+          <h4><span class="icon">⭐</span> Média das Avaliações por Estrela</h4>
+          <div id="ratingsChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">📊</span> Distribuição das Notas (Design)</h4>
+          <div id="designDistChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">📊</span> Distribuição das Notas (Efetividade)</h4>
+          <div id="efetDistChart"></div>
+                <div class="stat-section">
+          <h4><span class="icon">📊</span> Nota Mais Escolhida (Maioria)</h4>
+          <div id="majorityChart"></div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Uso & Tempo -->
+    <div class="tab-content" id="tab-uso">
+      <div class="stats-dashboard">
+        <div class="stat-section">
+          <h4><span class="icon">🔄</span> Frequência de Uso</h4>
+          <div id="usoChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">⏱️</span> Tempo no Site</h4>
+          <div id="tempoChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">📈</span> Resumo de Uso</h4>
+          <div id="usoResumo"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: NPS & Humor -->
+    <div class="tab-content" id="tab-nps">
+      <div class="stats-dashboard">
+        <div class="stat-section">
+          <h4><span class="icon">📢</span> NPS — Detratores, Passivos e Promotores</h4>
+          <div id="npsChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">📊</span> Distribuição do NPS</h4>
+          <div id="npsDistChart"></div>
+        </div>
+        <div class="stat-section">
+          <h4><span class="icon">💭</span> Como as Pessoas se Sentiram Depois</h4>
+          <div id="moodChart"></div>
+        </div>
+      </div>
+    </div>
+
+    
+
+        <!-- TAB: O que Falta & Fricção -->
+    <div class="tab-content" id="tab-sugestoes">
+      <div class="stats-dashboard">
+        <div class="stat-section" style="grid-column: 1 / -1;">
+          <h4><span class="icon">💡</span> Todas as Sugestões</h4>
+          <div class="suggestions-list" id="suggestionsList"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Tabela Completa -->
+    <div class="tab-content" id="tab-tabela">
+      <div id="feedbackList"></div>
+    
+    <!-- TAB: Todos os Dados -->
+    <div class="tab-content" id="tab-todos">
+      <div class="stats-dashboard">
+        <div class="stat-section" style="grid-column: 1 / -1;">
+          <h4><span class="icon">🏆</span> Todos os Rankings Individuais</h4>
+          <div id="allRankings"></div>
+        </div>
+        <div class="stat-section" style="grid-column: 1 / -1;">
+          <h4><span class="icon">⭐</span> Todas as Avaliações Individuais</h4>
+          <div id="allRatings"></div>
+        </div>
+        <div class="stat-section" style="grid-column: 1 / -1;">
+          <h4><span class="icon">📢</span> Todos os NPS Individuais</h4>
+          <div id="allNPS"></div>
+        </div>
+        <div class="stat-section" style="grid-column: 1 / -1;">
+          <h4><span class="icon">💭</span> Todos os Humores Individuais</h4>
+          <div id="allMoods"></div>
+        </div>
+      </div>
+
+      </div>
+    </div></div>
+
+</body>
+</html>
